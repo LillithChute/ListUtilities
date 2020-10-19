@@ -1,6 +1,8 @@
 package listadt;
 
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * This interface represents a generic list. It is a generalization of the
@@ -69,4 +71,17 @@ public interface ListADT<T> {
    *         has data of type R
    */
   <R> ListADT<R> map(Function<T, R> converter);
+
+  /**
+   * @param predicate
+   * @return
+   */
+  ListADT<T> filter(Predicate<T> predicate);
+
+  /**
+   * @param identity
+   * @param accumulator
+   * @return
+   */
+  T fold(T identity, BinaryOperator<T> accumulator);
 }

@@ -1,6 +1,8 @@
 package listadt;
 
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * This is the implementation of a generic list. Specifically it implements the
@@ -62,6 +64,16 @@ public class ListADTImpl<T> implements ListADT<T> {
   @Override
   public <R> ListADT<R> map(Function<T, R> converter) {
     return new ListADTImpl<>(head.map(converter));
+  }
+
+  @Override
+  public T fold(T identity, BinaryOperator<T> accumulator) {
+    return null;
+  }
+
+  @Override
+  public ListADT<T> filter(Predicate<T> predicate) {
+    return null;
   }
 
   @Override
