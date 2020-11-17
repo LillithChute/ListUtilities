@@ -1,11 +1,13 @@
 package listadt;
 
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * This is a non-empty node in a generic list. It contains the object data and
  * the rest of the list.
- * 
+ *
  * @param <T> the type of the element in the list
  */
 public class GenericElementNode<T> implements GenericListADTNode<T> {
@@ -14,7 +16,7 @@ public class GenericElementNode<T> implements GenericListADTNode<T> {
 
   /**
    * Constructor.
-   * 
+   *
    * @param p    the element at this node.
    * @param rest the rest of the list
    */
@@ -68,6 +70,25 @@ public class GenericElementNode<T> implements GenericListADTNode<T> {
   }
 
   @Override
+  public GenericListADTNode<T> reverse(GenericListADTNode<T> next) {
+    GenericListADTNode newHead = next.addFront(this.object);
+    return this.rest.reverse(newHead);
+  }
+
+  @Override
+  public GenericListADTNode<T> swap(int leftIndex, int rightIndex) {
+    T left = this.get(leftIndex);
+    T right = this.get(rightIndex);
+    this.remove(this.get(leftIndex));
+    this.remove(this.get(rightIndex));
+
+    this.add(rightIndex, left);
+    this.add(leftIndex, right);
+
+    return this;
+  }
+
+  @Override
   public <R> GenericListADTNode<R> map(Function<T, R> converter) {
     /*
      * Starting from this list of T, the resulting list of type R is an element
@@ -76,6 +97,17 @@ public class GenericElementNode<T> implements GenericListADTNode<T> {
      */
     return new GenericElementNode<>(converter.apply(this.object),
         this.rest.map(converter));
+  }
+
+  @Override
+  public GenericListADTNode<T> filter(Predicate<T> predicate) {
+    return new GenericElementNode(predicate.test(this.object),
+            this.rest);
+  }
+
+  @Override
+  public T fold(T identity, BinaryOperator<T> accumulator) {
+    return this.fold(identity, accumulator);
   }
 
   @Override

@@ -1,8 +1,10 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-import listadt.*;
+import static org.junit.Assert.assertEquals;
+
+import listadt.ListADT;
+import listadt.ListADTImpl;
 
 /**
  * Tests the listadt.ListADT implementation using a list of strings.
@@ -17,6 +19,9 @@ public class ListADTTest {
     stringList = new ListADTImpl<String>();
   }
 
+  /**
+   * This tests Add, AddFront, addBack, and remove.
+   */
   @Test
   public void testStringList() {
     stringList.addFront("won");
@@ -40,9 +45,44 @@ public class ListADTTest {
   }
 
   @Test
+  public void testReverse() {
+    stringList.addFront("won");
+    stringList.addFront("Patriots");
+    stringList.addBack("Super");
+    stringList.addBack("Bowl");
+    stringList.add(2, "the");
+
+    stringList.reverse();
+    assertEquals("(Bowl Super the won Patriots)", stringList.toString());
+  }
+
+  @Test
+  public void testSize() {
+    stringList.addFront("won");
+    stringList.addFront("Patriots");
+    stringList.addBack("Super");
+    stringList.addBack("Bowl");
+    stringList.add(2, "the");
+
+    assertEquals(5, stringList.getSize());
+  }
+
+  @Test
+  public void testGet() {
+    stringList.addFront("won");
+    stringList.addFront("Patriots");
+    stringList.addBack("Super");
+    stringList.addBack("Bowl");
+    stringList.add(2, "the");
+
+    assertEquals("Patriots", stringList.get(0));
+  }
+
+  @Test
   public void testMap() {
     // convert the list of strings above to a list that contains the length of
     // each word in the list
+    stringList = new ListADTImpl<String>();
     String sentence = "The quick brown fox jumps over the lazy dog";
     String[] words = sentence.split("\\s+");
     for (String w : words) {

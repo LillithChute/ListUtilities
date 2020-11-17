@@ -1,10 +1,14 @@
 package listadt;
 
+import static listadt.ListAdtHelpers.disjointHelper;
+import static listadt.ListAdtHelpers.equalsHelper;
+import static listadt.ListAdtHelpers.swapHelper;
+
 /**
  * A utility class that implements additional functionality for abstract data types and
  * uses higher order functions.
  */
-public final class ListADTUtilities {
+public final class ListADTUtilities<T> extends ListADTImpl<T> {
 
   /**
    * Creates a new instance of ListADT that contains all of the specified elements in the
@@ -15,7 +19,17 @@ public final class ListADTUtilities {
    * @throws IllegalArgumentException If elements contains one or more null values.
    */
   public static <T> ListADT<T> toList(T[] elements) throws IllegalArgumentException {
-    return null;
+    ListADT listADT = new ListADTImpl();
+
+    for (T element : elements) {
+      if (element == null) {
+        throw new IllegalArgumentException();
+      } else {
+        listADT.addBack(element);
+      }
+    }
+
+    return listADT;
   }
 
   /**
@@ -26,6 +40,13 @@ public final class ListADTUtilities {
    * @throws IllegalArgumentException If elements contains one more more null values.
    */
   public static <T> void addAll(ListADT<T> list, T... elements) throws IllegalArgumentException {
+    for (T element : elements) {
+      if (element == null) {
+        throw new IllegalArgumentException();
+      } else {
+        list.addBack(element);
+      }
+    }
   }
 
   /**
@@ -35,8 +56,16 @@ public final class ListADTUtilities {
    * @param element An element object type.
    * @return The number of elements in the list.
    */
-  <T> int frequency(ListADT<T> list, T element) {
-    return 0;
+  public static <T> int frequency(ListADT<T> list, T element) {
+    int counter = 0;
+
+    for (int i = 0; i < list.getSize(); i++) {
+      if (list.get(i) == element) {
+        counter += 1;
+      }
+    }
+
+    return counter;
   }
 
   /**
@@ -48,9 +77,10 @@ public final class ListADTUtilities {
    * @throws IllegalArgumentException If either list is null or if either list contains
    *     a null element.
    */
-  boolean disjoint(ListADT<?> one, ListADT<?> two) throws IllegalArgumentException {
-    return false;
+  public static boolean disjoint(ListADT<?> one, ListADT<?> two) throws IllegalArgumentException {
+    return disjointHelper(one, two);
   }
+
 
   /**
    * It will return true if the two lists are equal.
@@ -61,17 +91,10 @@ public final class ListADTUtilities {
    * @throws IllegalArgumentException If either list is null or if either list contains
    *     a null element.
    */
-  boolean equals(ListADT<?> one, ListADT<?> two) throws IllegalArgumentException {
-    return false;
+  public static boolean equals(ListADT<?> one, ListADT<?> two) throws IllegalArgumentException {
+    return equalsHelper(one, two);
   }
 
-  /**
-   * Reverses the order of the elements in the specified list.
-   *
-   * @param list The list to reverse.
-   */
-  void reverse(ListADT<?> list) {
-  }
 
   /**
    * This swaps the elements at the specified position in the specified list.
@@ -81,6 +104,7 @@ public final class ListADTUtilities {
    * @param j Position two.
    * @throws IndexOutOfBoundsException If either i or j are out of range.
    */
-  void swap(ListADT<?> list, int i, int j) throws IndexOutOfBoundsException {
+  public void swap(ListADT<?> list, int i, int j) throws IndexOutOfBoundsException {
+    swapHelper(list, i, j);
   }
 }

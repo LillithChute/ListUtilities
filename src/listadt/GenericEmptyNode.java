@@ -1,10 +1,12 @@
 package listadt;
 
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * This represents an empty node of the generic list implementation.
- * 
+ *
  * @param <T> the type of element in this node
  */
 public class GenericEmptyNode<T> implements GenericListADTNode<T> {
@@ -43,8 +45,28 @@ public class GenericEmptyNode<T> implements GenericListADTNode<T> {
   }
 
   @Override
+  public GenericListADTNode<T> reverse(GenericListADTNode<T> head) {
+    return head;
+  }
+
+  @Override
+  public GenericListADTNode<T> swap(int leftIndex, int rightIndex) {
+    return new GenericEmptyNode<>();
+  }
+
+  @Override
   public <R> GenericListADTNode<R> map(Function<T, R> converter) {
     return new GenericEmptyNode<>();
+  }
+
+  @Override
+  public GenericListADTNode<T> filter(Predicate<T> predicate) {
+    return new GenericEmptyNode<>();
+  }
+
+  @Override
+  public T fold(T identity, BinaryOperator<T> accumulator) {
+    return identity;
   }
 
   @Override
